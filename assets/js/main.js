@@ -891,20 +891,31 @@ $.getJSON('assets/data/quiz.json', function(data) {
         quizHtml += '<div class="quiz-item">';
         quizHtml += '<p class="question">' + q.question + '</p>';
         if(q.choices && q.choices.length) {
+            quizHtml += '<div class="answers">';
             q.choices.forEach(function(choice) {
-                quizHtml += '<label>';
-                quizHtml += '<input type="radio" name="answer_' + index + '" value="' + choice.toUpperCase() + '" />';
-                quizHtml += choice;
-                quizHtml += '</label><br>';
+                // Skip empty choices.
+                if(choice === "") return;
+                quizHtml += '<button type="button" class="answer-button" data-question-index="'+ index +'" data-answer="'+ choice.toUpperCase() +'">' + choice + '</button>';
             });
-        } else {
-            // fallback to a text input if choices not provided
+            quizHtml += '</div>';
+        }
+        else {
+            // fallback to a text input if no choices provided
             quizHtml += '<input type="text" id="answer_' + index + '" placeholder="Your answer" />';
         }
         quizHtml += '</div>';
     });
     quizHtml += '<button id="submitQuiz" class="button primary">Submit Answers</button>';
     $('#quiz-container').html(quizHtml);
+});
+
+$(document).on('click', '.answer-button', function() {
+    var $this = $(this),
+        qIndex = $this.data('question-index');
+    // Remove selected state from other buttons in the same question.
+    $('.answer-button[data-question-index="'+ qIndex +'"]').removeClass('selected');
+    // Add selected state.
+    $this.addClass('selected');
 });
 
 // When the quiz is submitted, compare answers.
@@ -914,13 +925,15 @@ $(document).on('click', '#submitQuiz', function() {
         data.forEach(function(q, index) {
             var userAns;
             if(q.choices && q.choices.length) {
-                userAns = $('input[name="answer_' + index + '"]:checked').val() || "";
-            } else {
+                // Get value from the selected answer button.
+                userAns = $('button.answer-button[data-question-index="'+ index +'"].selected').data('answer') || "";
+            }
+            else {
                 userAns = $('#answer_' + index).val();
             }
-            userAns = userAns.trim().toUpperCase();
+            userAns = String(userAns).trim().toUpperCase();
             var correctAns = q.answer.trim().toUpperCase();
-            if (userAns === correctAns) {
+            if(userAns === correctAns) {
                 score++;
             }
         });

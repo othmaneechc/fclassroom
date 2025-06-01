@@ -3816,3 +3816,28 @@ input, select, textarea {
         padding: 3.8875rem 1.75rem 1.3875rem 1.75rem;
 	}
 }
+
+.answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.answer-button {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.answer-button:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.answer-button.selected {
+    background: #ffe4b4;
+    border-color: #ffe4b4;
+    color: #2e2b37;
+}

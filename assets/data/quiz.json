@@ -5,8 +5,8 @@
     "choices": ["Shanghai", "Suzhou", "Kunshan", ""]
   },
   {
-    "question": "On what exact date (DD MM YYYY) did we meet?",
-    "answer": "18 08 2023",
-    "choices": ["19 08 2023", "17 08 2023", "18 08 2023", "24 08 2023"]
+    "question": "On what exact date (DDMMYYYY) did we meet?",
+    "answer": "18-08-2023",
+    "choices": ["19-08-2023", "17-08-2023", "18-08-2023", "24-08-2023"]
   }
 ]
