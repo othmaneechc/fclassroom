@@ -885,32 +885,48 @@
 			$body.css('overflow-x', 'auto');
 		}
 
-		$.getJSON('assets/data/quiz.json', function(data) {
-			var quizHtml = '';
-			data.forEach(function(q, index) {
-				quizHtml += '<div class="quiz-item">';
-				quizHtml += '<p class="question">' + q.question + '</p>';
-				quizHtml += '<input type="text" id="answer_' + index + '" placeholder="Your answer" />';
-				quizHtml += '</div>';
-			});
-			quizHtml += '<button id="submitQuiz" class="button primary">Submit Answers</button>';
-			$('#quiz-container').html(quizHtml);
-		});
+$.getJSON('assets/data/quiz.json', function(data) {
+    var quizHtml = '';
+    data.forEach(function(q, index) {
+        quizHtml += '<div class="quiz-item">';
+        quizHtml += '<p class="question">' + q.question + '</p>';
+        if(q.choices && q.choices.length) {
+            q.choices.forEach(function(choice) {
+                quizHtml += '<label>';
+                quizHtml += '<input type="radio" name="answer_' + index + '" value="' + choice.toUpperCase() + '" />';
+                quizHtml += choice;
+                quizHtml += '</label><br>';
+            });
+        } else {
+            // fallback to a text input if choices not provided
+            quizHtml += '<input type="text" id="answer_' + index + '" placeholder="Your answer" />';
+        }
+        quizHtml += '</div>';
+    });
+    quizHtml += '<button id="submitQuiz" class="button primary">Submit Answers</button>';
+    $('#quiz-container').html(quizHtml);
+});
 
-		// When the quiz is submitted, compare answers.
-		$(document).on('click', '#submitQuiz', function() {
-			$.getJSON('assets/data/quiz.json', function(data) {
-				var score = 0;
-				data.forEach(function(q, index) {
-					var userAns = $('#answer_' + index).val().trim().toUpperCase();
-					var correctAns = q.answer.trim().toUpperCase();
-					if (userAns === correctAns) {
-						score++;
-					}
-				});
-				alert("You got " + score + " out of " + data.length + " correct!");
-			});
-		});
+// When the quiz is submitted, compare answers.
+$(document).on('click', '#submitQuiz', function() {
+    $.getJSON('assets/data/quiz.json', function(data) {
+        var score = 0;
+        data.forEach(function(q, index) {
+            var userAns;
+            if(q.choices && q.choices.length) {
+                userAns = $('input[name="answer_' + index + '"]:checked').val() || "";
+            } else {
+                userAns = $('#answer_' + index).val();
+            }
+            userAns = userAns.trim().toUpperCase();
+            var correctAns = q.answer.trim().toUpperCase();
+            if (userAns === correctAns) {
+                score++;
+            }
+        });
+        alert("You got " + score + " out of " + data.length + " correct!");
+    });
+});
 
 $('#quiz-container').on('wheel', function(event) {
     // When scrolling inside #quiz-container, only allow vertical scrolling and stop propagation.
@@ -936,7 +952,7 @@ var settings = {
         threshold: 10
     },
     excludeSelector: 'input:focus, select:focus, textarea:focus, audio, video, iframe',
-    linkScrollSpeed: 5000  // changed from 1000 to 3000 (3 seconds)
+    linkScrollSpeed: 10000  // changed from 1000 to 3000 (3 seconds)
 };
 
 $(function() {
@@ -960,7 +976,7 @@ $(function() {
     }
     
 	totalMonths += 1;
-	
+
     // Update the h1 text within the intro section
     $('.intro h1.major').text('Countdown to ' + totalMonths + ' Months Together');
 });
