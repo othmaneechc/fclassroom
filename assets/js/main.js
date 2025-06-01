@@ -756,4 +756,214 @@
 
 					});
 
+
+		// Countdown Code
+		// var targetDate = new Date("June 8, 2025 00:00:00").getTime();
+
+		// function updateCountdown() {
+		// 	var now = new Date().getTime();
+		// 	var distance = targetDate - now;
+
+		// 	if (distance < 0) {
+		// 		$("#countdown").html("Countdown Finished!");
+		// 		clearInterval(countdownInterval);
+		// 		return;
+		// 	}
+
+		// 	var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+		// 	var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		// 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		// 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		// 	var html = '<div class="countdown-container">';
+		// 	html += '<div class="count-box"><span class="value">' + days + '</span><span class="label">Days</span></div>';
+		// 	html += '<div class="count-box"><span class="value">' + hours + '</span><span class="label">Hours</span></div>';
+		// 	html += '<div class="count-box"><span class="value">' + minutes + '</span><span class="label">Minutes</span></div>';
+		// 	html += '<div class="count-box"><span class="value">' + seconds + '</span><span class="label">Seconds</span></div>';
+		// 	html += '</div>';
+
+		// 	$("#countdown").html(html);
+		// }
+
+		// var countdownInterval = setInterval(updateCountdown, 1000);
+		// updateCountdown();
+
+		// Helper function: returns the timestamp for the next target date,
+		// which is set to the 8th of the month at midnight.
+		function getNextTargetDate() {
+			var now = new Date();
+			var year = now.getFullYear();
+			var month = now.getMonth(); // 0-indexed (0 = January)
+			var targetDay = 8;
+			
+			// If today is on or past the 8th, target the next month's 8th.
+			if (now.getDate() >= targetDay) {
+				month++;
+				if (month > 11) {
+					month = 0;
+					year++;
+				}
+			}
+			return new Date(year, month, targetDay, 0, 0, 0, 0).getTime();
+		}
+
+		// Initialize targetDate.
+		var targetDate = getNextTargetDate();
+
+		function updateCountdown() {
+			var now = new Date().getTime();
+			var distance = targetDate - now;
+
+			// If the countdown has expired:
+			if (distance < 0) {
+				var today = new Date();
+				// Check if today is the 8th of October (0-indexed month 9)
+				if (today.getMonth() === 9 && today.getDate() === 8) {
+					$("#countdown").html("<div class='special-message'>Happy Anniversary, my love!</div>");
+					// Optionally, delay before resetting to the next target date:
+					setTimeout(function() {
+						targetDate = getNextTargetDate();
+						updateCountdown();
+					}, 10000); // 10-second delay
+					return;
+				} else {
+					// Reset target date for the next month's 8th and return early.
+					targetDate = getNextTargetDate();
+					return;
+				}
+			}
+
+			var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+			var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+			var html  = '<div class="countdown-container">';
+			html +=     '<div class="count-box"><span class="value">' + days + '</span><span class="label">Days</span></div>';
+			html +=     '<div class="count-box"><span class="value">' + hours + '</span><span class="label">Hours</span></div>';
+			html +=     '<div class="count-box"><span class="value">' + minutes + '</span><span class="label">Minutes</span></div>';
+			html +=     '<div class="count-box"><span class="value">' + seconds + '</span><span class="label">Seconds</span></div>';
+			html += '</div>';
+
+			$("#countdown").html(html);
+		}
+
+		var countdownInterval = setInterval(updateCountdown, 1000);
+		updateCountdown();
+
+		var validCode = "aj389"; 
+
+		$("#access-button").on("click", function() {
+			var code = $("#access-code").val();
+			if (code === validCode) {
+				$("#access-overlay").fadeOut(500);
+			} else {
+				$("#access-error").text("Incorrect. You suck.");
+			}
+		});
+
+		// When the correct code is entered, fade out the overlay and re-enable scrolling.
+		$("#access-button").on("click", function() {
+			var code = $("#access-code").val();
+			if (code === validCode) {
+				$("#access-overlay").fadeOut(500, function() {
+					$("body").css("overflow", "auto");
+				});
+			} else {
+				$("#access-error").text("Incorrect. You suck.");
+			}
+		});
+
+		if (browser.mobile) {
+			// Disable all scroll-assist features.
+			settings.keyboardShortcuts.enabled = false;
+			settings.scrollWheel.enabled = false;
+			settings.scrollZones.enabled = false;
+			settings.dragging.enabled = false;
+
+			// Re-enable overflow on body.
+			$body.css('overflow-x', 'auto');
+		}
+
+		$.getJSON('assets/data/quiz.json', function(data) {
+			var quizHtml = '';
+			data.forEach(function(q, index) {
+				quizHtml += '<div class="quiz-item">';
+				quizHtml += '<p class="question">' + q.question + '</p>';
+				quizHtml += '<input type="text" id="answer_' + index + '" placeholder="Your answer" />';
+				quizHtml += '</div>';
+			});
+			quizHtml += '<button id="submitQuiz" class="button primary">Submit Answers</button>';
+			$('#quiz-container').html(quizHtml);
+		});
+
+		// When the quiz is submitted, compare answers.
+		$(document).on('click', '#submitQuiz', function() {
+			$.getJSON('assets/data/quiz.json', function(data) {
+				var score = 0;
+				data.forEach(function(q, index) {
+					var userAns = $('#answer_' + index).val().trim().toUpperCase();
+					var correctAns = q.answer.trim().toUpperCase();
+					if (userAns === correctAns) {
+						score++;
+					}
+				});
+				alert("You got " + score + " out of " + data.length + " correct!");
+			});
+		});
+
+$('#quiz-container').on('wheel', function(event) {
+    // When scrolling inside #quiz-container, only allow vertical scrolling and stop propagation.
+    event.stopPropagation();
+});
+
+var settings = {
+    keyboardShortcuts: {
+        enabled: true,
+        distance: 50
+    },
+    scrollWheel: {
+        enabled: true,
+        factor: 1
+    },
+    scrollZones: {
+        enabled: true,
+        speed: 15
+    },
+    dragging: {
+        enabled: true,
+        momentum: 0.875,
+        threshold: 10
+    },
+    excludeSelector: 'input:focus, select:focus, textarea:focus, audio, video, iframe',
+    linkScrollSpeed: 5000  // changed from 1000 to 3000 (3 seconds)
+};
+
+$(function() {
+    // Set reference date: October 8, 2023 (month is 0-indexed so October is 9)
+    var referenceDate = new Date(2023, 9, 8);
+    var now = new Date();
+    
+    // Calculate total months difference
+    var yearsDiff = now.getFullYear() - referenceDate.getFullYear();
+    var monthsDiff = now.getMonth() - referenceDate.getMonth();
+    var totalMonths = yearsDiff * 12 + monthsDiff;
+    
+    // Adjust if the current day is less than the reference day
+    if (now.getDate() < referenceDate.getDate()) {
+        totalMonths--;
+    }
+    
+    // Prevent negative values (if before October 8, 2023)
+    if (totalMonths < 0) {
+        totalMonths = 0;
+    }
+    
+	totalMonths += 1;
+	
+    // Update the h1 text within the intro section
+    $('.intro h1.major').text('Countdown to ' + totalMonths + ' Months Together');
+});
+
 })(jQuery);
+

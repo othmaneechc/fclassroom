@@ -6,26 +6,60 @@
 -->
 <html>
 	<head>
-		<title>Ethereal by HTML5 UP</title>
+		<title>F Classroom</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
+
+		<!-- Access Code Overlay -->
+		<!-- <div id="access-overlay">
+			<div id="access-form">
+				<h2>Enter NetID</h2>
+				<input type="password" id="access-code" placeholder="Access Code" />
+				<button id="access-button" class="button primary color">Enter</button>
+				<p id="access-error"></p>
+			</div>
+		</div> -->
 
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
 
 				<!-- Wrapper -->
 					<div id="wrapper">
-
-						<!-- Panel -->
-							<section class="panel">
-								<div class="intro color2">
-									<h2 class="major">Elit integer</h2>
-									<p>Sed vel nibh libero. Mauris et lorem pharetra massa lorem turpis congue pulvinar. Vivamus sed feugiat finibus. Duis amet bibendum amet sed. Duis mauris ex, dapibus sed ligula tempus volutpat magna etiam.</p>
+							<section class="panel banner right">
+								<div class="intro color4">
+									<h1 class="major">Countdown to Twenty Months together</h1>
+									<p id="countdown">Loading...</p>
 								</div>
+								<div class="content color0 span-3-75">
+									<h1 class="major">Welcome, Curious Traveler</h1>
+
+									    <p>
+										You’ve slipped behind the curtain and into the private story of&nbsp;<em>us</em>.  
+										Your first challenge awaits: a quiz, just for you.
+										Pass it, and the next door will crack open just a little wider.
+										</p>
+
+										<p>
+										Heads-up: at midnight on the <strong>8th</strong> of every month, something
+										new drops here. Could be a new page, a playlist, or who knows.
+										Watch the countdown and stay curious heheh.
+										</p>
+
+									<ul class="actions">
+										<li><a href="#first" class="button primary color1 circle icon solid fa-angle-right">Begin the Hunt</a></li>
+									</ul>
+								</div>
+								<div class="image filtered span-1-75" data-position="25% 25%">
+									<img src="images/pic01.jpg" alt="" />
+								</div>
+							</section>
+
+							<section class="panel">
 								<div class="gallery">
 									<div class="group span-3">
 										<a href="images/gallery/fulls/01.jpg" class="image filtered span-3" data-position="bottom"><img src="images/gallery/thumbs/01.jpg" alt="" /></a>
@@ -43,34 +77,27 @@
 								</div>
 							</section>
 
-						<!-- Panel (Banner) -->
-							<section class="panel banner right">
-								<div class="content color0 span-3-75">
-									<h1 class="major">Hello, my name<br />
-									is Ethereal</h1>
-									<p>This is <strong>Ethereal</strong>, a free site template by AJ for <a href="https://html5up.net">HTML5 UP</a>. It’s fully responsive, built on HTML5 and CSS3, and released entirely for free under the Creative Commons license. Hope you dig it :)</p>
-									<ul class="actions">
-										<li><a href="#first" class="button primary color1 circle icon solid fa-angle-right">Next</a></li>
-									</ul>
-								</div>
-								<div class="image filtered span-1-75" data-position="25% 25%">
-									<img src="images/pic01.jpg" alt="" />
+							<section  id="first" class="panel quiz right">
+								<div class="content">
+									<h1 class="major">Relationship Quiz</h1>
+									<div id="quiz-container">
+										<!-- Quiz questions will be loaded here -->
+									</div>
 								</div>
 							</section>
-
+							
 						<!-- Panel (Spotlight) -->
 							<section class="panel spotlight medium right" id="first">
 								<div class="content span-7">
-									<h2 class="major">Sed etiam aenean</h2>
-									<p>Mauris et ligula arcu. Proin dapibus convallis accumsan. Lorem maximus hendrerit orci, sit amet elementum massa hendrerit sed. Donec et ullamcorper ligula. Suspendisse amet potenti. Ut pretium libero eleifend euismod sed tristique. Quisque dictum magna risus, id ultricies justo sagittis vitae. Sed id odio tempor, porttitor elit amet, gravida hendrerit fringilla lorem ipsum dolor.</p>
+									<h2 class="major">Missing you</h2>
+									<p>Thank you for being the most amazing human being. Your fun and unique sparkle light up my world every day. I miss you more than words can say, and I'm so grateful for every moment we share—even when we're apart.</p>
 								</div>
 								<div class="image filtered tinted" data-position="top left">
 									<img src="images/pic02.jpg" alt="" />
 								</div>
 							</section>
 
-						<!-- Panel -->
-							<section class="panel color1">
+					<!--	<section class="panel color1">
 								<div class="intro joined">
 									<h2 class="major">Amet lorem</h2>
 									<p>Sed vel nibh libero. Mauris et lorem pharetra massa lorem turpis congue pulvinar. Vivamus sed feugiat finibus. Duis amet bibendum amet sed. Duis mauris ex, dapibus sed ligula tempus volutpat magna etiam.</p>
@@ -87,7 +114,6 @@
 								</div>
 							</section>
 
-						<!-- Panel (Spotlight) -->
 							<section class="panel spotlight large left">
 								<div class="content span-5">
 									<h2 class="major">Magna amet tempus</h2>
@@ -98,7 +124,6 @@
 								</div>
 							</section>
 
-						<!-- Panel -->
 							<section class="panel color4-alt">
 								<div class="intro color4">
 									<h2 class="major">Contact</h2>
@@ -138,7 +163,6 @@
 								</div>
 							</section>
 
-						<!-- Panel -->
 							<section class="panel color2-alt">
 								<div class="intro color2">
 									<h2 class="major">Elements</h2>
@@ -166,16 +190,16 @@
 										<blockquote>Lorem ipsum dolor sit amet. Felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in vestibulum. Blandit adipiscing eu iaculis volutpat ac adipiscing volutpat ac adipiscing faucibus.</blockquote>
 
 										<h4>Preformatted</h4>
-										<pre><code>i = 0;
+										<pre><code>i = 0; -->
 
-while (!deck.isInOrder()) {
+<!-- while (!deck.isInOrder()) {
     print 'Iteration ' + (i++);
     deck.shuffle();
 }
 
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
+print 'It took ' + i + ' iterations to sort the deck.';</code></pre> -->
 
-									</div>
+									<!-- </div>
 									<div class="span-1-25">
 
 										<h3 class="major">Lists</h3>
@@ -405,7 +429,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 										</form>
 									</div>
 								</div>
-							</section>
+							</section> -->
 
 						<!-- Copyright -->
 							<div class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>

@@ -1,0 +1,52 @@
+[
+  { "question": "Where did we go on our very first date?",                           "answer": "LAKESIDE CAFÉ" },
+  { "question": "What movie did we watch the night we officially became a couple?",   "answer": "INTERSTELLAR" },
+  { "question": "Which song was playing during our first dance together?",            "answer": "PERFECT by Ed Sheeran" },
+  { "question": "On what exact date (DD MM YYYY) did we meet?",                       "answer": "12 03 2023" },
+
+  { "question": "What’s my absolute favorite ice-cream flavor?",                      "answer": "PISTACHIO" },
+  { "question": "Which pizza topping do I always pick off before eating?",            "answer": "OLIVES" },
+  { "question": "What TV show can I re-watch endlessly without getting bored?",       "answer": "FRIENDS" },
+  { "question": "What’s the first song on my morning playlist?",                      "answer": "SUNSHINE by OneRepublic" },
+  { "question": "Which board game turns me into a shameless trash-talker?",           "answer": "UNO" },
+  { "question": "Coffee order: what size plus what milk?",                            "answer": "MEDIUM LATTE, OAT MILK" },
+
+  { "question": "At what exact minute does my alarm usually go off?",                 "answer": "07:10" },
+  { "question": "What’s the very first app I open each morning?",                     "answer": "SPOTIFY" },
+  { "question": "Which chore do I secretly enjoy doing?",                              "answer": "WASHING DISHES" },
+  { "question": "When it’s movie night, what snack do I always reach for first?",     "answer": "SALTED POPCORN" },
+
+  { "question": "Mountains or beach?",                                                "answer": "BEACH" },
+  { "question": "Sunrise or sunset?",                                                 "answer": "SUNSET" },
+  { "question": "Cats or dogs?",                                                      "answer": "DOGS" },
+  { "question": "Texting or voice notes?",                                            "answer": "VOICE" },
+
+  { "question": "Fill in the blank: “Pancakes are only complete with a dash of _____.”", "answer": "CINNAMON" },
+  { "question": "What nickname do you teasingly call me when I’m being dramatic?",    "answer": "DRAMA QUEEN" },
+  { "question": "When I say “Plan B,” which late-night food spot am I referencing?",  "answer": "TACO TRUCK" },
+  { "question": "Our secret handshake ends with what silly gesture?",                 "answer": "ELBOW BUMP" },
+
+  { "question": "Which country tops my must-visit list?",                             "answer": "ICELAND" },
+  { "question": "What musical instrument do I wish I could play?",                    "answer": "PIANO" },
+  { "question": "What marathon or triathlon have I set my sights on?",                "answer": "PARIS HALF" },
+  { "question": "Which language am I determined to learn next?",                      "answer": "SPANISH" },
+
+  { "question": "How many cups of coffee did I drink yesterday?",                     "answer": "3" },
+  { "question": "How many unread emails are in my inbox right now?",                  "answer": "17" },
+  { "question": "How long (in minutes) did I spend on TikTok last Sunday?",           "answer": "42" },
+
+  { "question": "Which selfie of ours is my favorite? (answer with the month)",       "answer": "APRIL" },
+  { "question": "What’s the funniest thing you’ve ever said (according to me)?",      "answer": "PIZZA IS A SALAD" },
+  { "question": "Which date night did I call “the best so far”?",                     "answer": "ROOFTOP JAZZ" },
+
+  { "question": "Who said, “I knew it was you from the first laugh”?",                "answer": "YOU" },
+  { "question": "Who first suggested adopting a dog together?",                       "answer": "ME" },
+
+  { "question": "What color do I want our future kitchen cabinets to be?",            "answer": "SAGE GREEN" },
+  { "question": "If we ever get a cat, what name have I already picked?",             "answer": "MOCHI" },
+  { "question": "What city do I joke about retiring in?",                             "answer": "LISBON" },
+  { "question": "Which song have I claimed will be our wedding entrance track?",      "answer": "CAN’T HELP FALLING IN LOVE" },
+
+  { "question": "Socks in bed: yes or no?",                                           "answer": "NO" },
+  { "question": "Pineapple on pizza?",                                                "answer": "YES" }
+]
