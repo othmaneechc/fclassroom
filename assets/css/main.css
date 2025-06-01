@@ -3837,7 +3837,7 @@ input, select, textarea {
 }
 
 .answer-button.selected {
-    background: #ffe4b4;
+    background: #ffeac528;
     border-color: #ffe4b4;
     color: #2e2b37;
 }
