@@ -7,6 +7,77 @@
   {
     "question": "On what exact date (DDMMYYYY) did we meet?",
     "answer": "18-08-2023",
-    "choices": ["19-08-2023", "17-08-2023", "18-08-2023", "24-08-2023"]
+    "choices": ["19-08-2023", "17-08-2023", "18-08-2023"]
+  },
+  {
+    "question": "Cats or dogs?",
+    "answer": "Cats",
+    "choices": ["Cats", "Dogs", "Both", "Neither"]
+  },
+  {
+    "question": "Cats or dogs?",
+    "answer": "Cats",
+    "choices": ["Cats", "Dogs", "Both", "Neither"]
+  },
+  {
+    "question": "What’s my absolute favorite ice-cream flavor?",
+    "answer": "Coffee",
+    "choices": ["Coffee", "Chocolate", "Vanilla", "Strawberry"]
+  },
+  {
+    "question": "Which pizza topping do I always pick off before eating?",
+    "answer": "None",
+    "choices": ["Olives", "Mushrooms", "Peppers", "None"]
+  },
+  {
+    "question": "What's the name of my favorite anime?",
+    "answer": "One Piece",
+    "choices": ["Attack on Titan", "One Piece", "Dragon Ball"]
+  },
+  {
+    "question": "Texting or voice notes?",
+    "answer": "Voice notes",
+    "choices": ["Texting", "Voice notes", "Both", "Neither"]
+  },
+  {
+    "question": "Favorite Dessert?",
+    "answer": "Tiramisu",
+    "choices": ["Brownie", "Tiramisu", "Cheese Cake", "Dark Forest Cake"]
+  },
+  {
+    "question": "At what exact minute does my alarm usually go off?",
+    "answer": "08:15",
+    "choices": ["07:10", "07:30", "08:00", "08:15"]
+  },
+  {
+    "question": "What do I hate the most about you?",
+    "answer": "Nothing",
+    "choices": ["Your attitude", "Your morning breath", "Nothing"]
+  },
+  {
+    "question": "When it’s movie night, what snack do I always reach for first?",
+    "answer": "You",
+    "choices": ["Chips", "Popcorn", "Chocolate", "You"]
+  },
+  {
+    "question": "Fill in the blank: “Pancakes are only complete with a dash of _____.”",
+    "answer": "Amlou",
+    "choices": ["Honey", "Maple syrup", "Amlou"]
+  },
+
+  {
+    "question": "Which country tops my must-visit list?",
+    "answer": "Pakistan",
+    "choices": ["Japan", "Senegal", "Egypt", "Pakistan"]
+  },
+  {
+    "question": "What musical instrument do I wish I could play?",
+    "answer": "Piano",
+    "choices": ["Guitar", "Piano", "Drums"]
+  },
+  {
+    "question": "Which language am I determined to learn next?",
+    "answer": "Spanish",
+    "choices": ["French", "Spanish", "German"]
   }
 ]
