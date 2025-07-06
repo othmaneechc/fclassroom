@@ -15,11 +15,6 @@
     "choices": ["Cats", "Dogs", "Both", "Neither"]
   },
   {
-    "question": "Cats or dogs?",
-    "answer": "Cats",
-    "choices": ["Cats", "Dogs", "Both", "Neither"]
-  },
-  {
     "question": "What’s my absolute favorite ice-cream flavor?",
     "answer": "Coffee",
     "choices": ["Coffee", "Chocolate", "Vanilla", "Strawberry"]
