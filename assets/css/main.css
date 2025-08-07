@@ -3841,3 +3841,20 @@ input, select, textarea {
     border-color: #ffe4b4;
     color: #2e2b37;
 }
+
+/* --- Hangman extras --- */
+#hangman-word {
+  letter-spacing: .35em;
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+#hangman-input {
+  width: 4rem;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: auto;
+}
+#hangman-misses {
+  margin-top: .5rem;
+  color: var(--accent-color, #f56a6a);
+}

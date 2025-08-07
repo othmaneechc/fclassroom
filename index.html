@@ -104,7 +104,7 @@
 								</div>
 							</section> -->
 							
-							<section class="panel spotlight small right" id="first">
+							<!-- <section class="panel spotlight small right" id="first">
 								<div class="content span-10">
 									<h2 class="major">i’m sorry</h2>
 									<p>I know I hurt you, and no apology feels big enough.</p>
@@ -114,7 +114,7 @@
 								<div class="image filtered tinted" data-position="top left">
 									<img src="images/pic03.jpg" alt="" />
 								</div>
-							</section>
+							</section> -->
 
 							
 							<section id="spotify" class="panel spotlight small right">
@@ -153,10 +153,9 @@
 							</section>
   
 							<!-- Handwritten Letter Section -->
-							<section id="first" class="panel spotlight small right">
+							<!-- <section id="first" class="panel spotlight small right">
 								<div class="content">
 								<h2 class="major">a letter for you</h2>
-								<!-- PDF button styled like your other CTAs -->
 								<a href="assets/pdf/letter.pdf"
 									target="_blank"
 									class="button primary color1 circle icon solid fa-file-pdf">
@@ -166,6 +165,29 @@
 								<div class="image filtered tinted" data-position="top left">
 									<img src="images/pic04.jpg" alt="" />
 								</div>
+							</section> -->
+
+							<!-- Hangman panel ------------------------------------------------------->
+							<section id="hangman" class="panel spotlight small right">
+							<div class="content span-10">
+								<h2 class="major">Hangman Challenge</h2>
+
+								<!-- word display -->
+								<p id="hangman-word"></p>
+
+								<!-- guess input -->
+								<input id="hangman-input" type="text" maxlength="1"
+									placeholder="Type a letter" style="text-transform:uppercase" />
+								<button id="hangman-btn" class="button primary color">Guess</button>
+
+								<!-- feedback -->
+								<p id="hangman-misses"></p>
+								<p id="hangman-message"></p>
+							</div>
+
+							<div class="image filtered tinted" data-position="top left">
+								<img src="images/pic02.jpg" alt="" />
+							</div>
 							</section>
 
 							<div class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
@@ -179,6 +201,64 @@
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+			/* Simple one-word Hangman — tweak secretWord to anything you like */
+			(() => {
+			const secretWord = "PUMPKIN".toUpperCase();   // <-- CHANGE ME
+			const maxWrong   = 6;
+
+			const guessed    = new Set();
+			let   wrong      = 0;
+
+			const $word   = document.getElementById("hangman-word");
+			const $input  = document.getElementById("hangman-input");
+			const $btn    = document.getElementById("hangman-btn");
+			const $misses = document.getElementById("hangman-misses");
+			const $msg    = document.getElementById("hangman-message");
+
+			/* helpers */
+			const renderWord = () =>
+				$word.textContent = secretWord
+				.split("")
+				.map(l => guessed.has(l) ? l : "_")
+				.join(" ");
+
+			const renderMisses = () =>
+				$misses.textContent = `Wrong guesses: ${wrong} / ${maxWrong}`;
+
+			const endGame = (win) => {
+				$msg.textContent = win
+				? "You nailed it! ❤️"
+				: `Out of tries— the word was “${secretWord}”.`;
+				$btn.disabled = $input.disabled = true;
+			};
+
+			const handleGuess = () => {
+				const letter = $input.value.toUpperCase();
+				$input.value = "";                  // clear field
+
+				if (!/^[A-Z]$/.test(letter) || guessed.has(letter)) return;
+
+				guessed.add(letter);
+				if (secretWord.includes(letter)) {
+				renderWord();
+				if (!$word.textContent.includes("_")) endGame(true);
+				} else {
+				wrong++;
+				renderMisses();
+				if (wrong >= maxWrong) endGame(false);
+				}
+			};
+
+			/* wire up */
+			$btn.addEventListener("click", handleGuess);
+			$input.addEventListener("keydown", e => (e.key === "Enter") && handleGuess());
+
+			/* initial draw */
+			renderWord();
+			renderMisses();
+			})();
+			</script>
 
 	</body>
 </html>
