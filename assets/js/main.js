@@ -1017,7 +1017,7 @@ $(function() {
       "Spin this diiiiih",
     ],
     moments: [
-      "You actually taught me how to celebrate birthday, I now look forward to mine.",
+      "You actually taught me how to celebrate birthdays, I now look forward to mine.",
       "First kiss on the field.",
 	  "Hospital trip on the ambulance. That was fun lol.",
 	],
