@@ -10,6 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/wheel.css" />
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
@@ -108,7 +109,7 @@
 								<div class="content span-10">
 									<h2 class="major">i’m sorry</h2>
 									<p>I know I hurt you, and no apology feels big enough.</p>
-									<p>I’ve put together a playlist of the songs that remind me of us, and a little video of all the memories we've made together: I love you, I miss you, and I’ll spend every day making this right.</p>
+									<p	I’ve put together a playlist of the songs that remind me of us, and a little video of all the memories we've made together: I love you, I miss you, and I’ll spend every day making this right.</p>
 									<p>Please take your time reading, listening, and watching. I’m here, ready to listen and to learn how to be the person you deserve.</p>
 								</div>
 								<div class="image filtered tinted" data-position="top left">
@@ -189,6 +190,48 @@
 								<img src="images/pic02.jpg" alt="" />
 							</div>
 							</section>
+							
+							<!-- Love Wheel Section -->
+							<section class="panel spotlight x-small right" id="love-wheel-section">
+								<div class="content span-3">
+									<h2 class="major">Spin the Love Wheel</h2>
+									<p>Give it a spin and see what comes up!</p>
+									
+									<div class="wheel-container">
+										<div class="wheel" id="love-wheel">
+											<div class="wheel-section" data-category="lovethings"></div>
+											<div class="wheel-section" data-category="trips"></div>
+											<div class="wheel-section" data-category="future"></div>
+											<div class="wheel-section" data-category="jokes"></div>
+											<div class="wheel-section" data-category="moments"></div>
+											<div class="wheel-section" data-category="quirks"></div>
+											<div class="wheel-text">
+												<div>Things I Love</div>
+												<div>Trip Memory</div>
+												<div>Future Plans</div>
+												<div>Inside Jokes</div>
+												<div>Special Moments</div>
+												<div>Cute Quirks</div>
+											</div>
+										</div>
+										<div class="wheel-pin"></div>
+									</div>
+									
+									<button id="spin-button" class="button primary">Spin the Wheel</button>
+								</div>
+								<div class="image filtered tinted" data-position="top left">
+									<img src="images/pic05.jpg" alt="" />
+								</div>
+							</section>
+
+							<!-- Wheel Result Modal -->
+							<div id="wheel-result-modal">
+								<div class="modal-content">
+									<span class="close-modal">&times;</span>
+									<h3 id="result-title">Category</h3>
+									<p id="result-message">Message will appear here</p>
+								</div>
+							</div>
 
 							<div class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
 

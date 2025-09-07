@@ -1,0 +1,199 @@
+/* Love Wheel Styles - Clean Simple Approach */
+.wheel-container {
+  position: relative;
+  width: min(60vw, 250px);
+  aspect-ratio: 1 / 1;            /* keep it perfectly square */
+  margin: 1.5rem auto;
+}
+
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;            /* belt + suspenders */
+  border-radius: 50%;
+  border: 6px solid #fff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  overflow: hidden;
+  isolation: isolate;
+
+  /* CRISP, EVEN SLICES — start from top (pointer) */
+  background: conic-gradient(
+    from -90deg,
+    #FF6B6B 0deg   60deg,
+    #4ECDC4 60deg  120deg,
+    #FFD166 120deg 180deg,
+    #118AB2 180deg 240deg,
+    #EF476F 240deg 300deg,
+    #06D6A0 300deg 360deg
+  );
+
+  /* smooth spin */
+  transform: rotate(0deg);
+  transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+/* Hide the old triangular pieces (they were causing the mess) */
+.wheel-section { display: none; }
+
+/* Radial labels that scale with size - HIDDEN */
+.wheel-text {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --radius: calc(50% - 34px);               /* distance from center to text */
+  display: none; /* Hide the text on the wheel */
+}
+
+.wheel-text div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6ch;
+  text-align: center;
+  font-weight: 700;
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.55);
+  transform-origin: center center;
+}
+
+/* Keep each label upright but placed on its slice center - adjusted for conic-gradient starting at -90deg */
+.wheel-text div:nth-child(1) { --a: -60deg;  transform: rotate(var(--a)) translate(var(--radius)) rotate(calc(-1 * var(--a))); }
+.wheel-text div:nth-child(2) { --a:   0deg;  transform: rotate(var(--a)) translate(var(--radius)) rotate(calc(-1 * var(--a))); }
+.wheel-text div:nth-child(3) { --a:  60deg;  transform: rotate(var(--a)) translate(var(--radius)) rotate(calc(-1 * var(--a))); }
+.wheel-text div:nth-child(4) { --a: 120deg;  transform: rotate(var(--a)) translate(var(--radius)) rotate(calc(-1 * var(--a))); }
+.wheel-text div:nth-child(5) { --a: 180deg;  transform: rotate(var(--a)) translate(var(--radius)) rotate(calc(-1 * var(--a))); }
+.wheel-text div:nth-child(6) { --a: 240deg;  transform: rotate(var(--a)) translate(var(--radius)) rotate(calc(-1 * var(--a))); }
+
+/* Optional: super-thin white separators between slices (comment out if not wanted) */
+.wheel::after {
+  content: "";
+  position: absolute;
+  inset: -1px;                 /* cover the border seam */
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from -90deg, #ffffff80 0deg 0.75deg, transparent 0.75deg 60deg);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.wheel-pin {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 24px solid #ffe4b4;
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+#spin-button {
+  display: block !important;
+  margin: 1.5rem auto 0 auto !important;
+  background: linear-gradient(45deg, #ffe4b4, #ffd700) !important;
+  color: #2e2b37 !important;
+  border: none !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease !important;
+}
+
+#spin-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(255, 212, 0, 0.4) !important;
+}
+
+/* Modal styles */
+#wheel-result-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(46, 43, 55, 0.85);
+  z-index: 20000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 228, 180, 0.95));
+  color: #2e2b37;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 90%;
+  max-height: 80%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  border: 2px solid rgba(255, 228, 180, 0.5);
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #2e2b37;
+  transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+  color: #666;
+}
+
+#result-title {
+  color: #2e2b37;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#result-message {
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #444;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Heart animation */
+.heart {
+  position: fixed;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background: #ff7aa2;
+  transform: rotate(45deg);
+  animation: float 2.5s ease-out forwards;
+  pointer-events: none;
+  z-index: 12000;
+}
+.heart:before, .heart:after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: inherit;
+  border-radius: 50%;
+  top: -7px;
+  left: 0;
+}
+.heart:after { left: -7px; top: 0; }
+@keyframes float {
+  to { transform: translateY(-120vh) rotate(45deg); opacity: 0; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .wheel { transition-duration: 0.001s; }
+}

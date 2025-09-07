@@ -994,5 +994,100 @@ $(function() {
     $('.intro h1.major').text('Countdown to ' + totalMonths + ' Months Together');
 });
 
-})(jQuery);
+// Love Wheel Feature
+$(function() {
+  // Message database by category
+  const messages = {
+    lovethings: [
+      "I love how your eyes light up when you stop feeling you're cramps.",
+      "I love your sense of humor especially after you stop feeling you're cramps.",
+      "I love your beautiful smile that melts my heart every time."
+    ],
+    trips: [
+      "Thinking about that time the Vietnamese vendors called us poor.",
+      "Sunset photos in Chongqing. We got mad at each other but it was worth it.",
+      "Biking around Shanghai has to be one of my favorite memories with you.",
+    ],
+    future: [
+      "Looking forward to traveling the world with you, one country at a time.",
+      "All my plans for the future have you in the center of them."
+    ],
+    jokes: [
+      "O M qiiii",
+      "Spin this diiiiih",
+    ],
+    moments: [
+      "You actually taught me how to celebrate birthday, I now look forward to mine.",
+      "First kiss on the field.",
+	  "Hospital trip on the ambulance. That was fun lol.",
+	],
+    quirks: [
+      "I adore how you bite your lips when you're concentrating.",
+      "I love waking up before you, take photos of your sleeping positions, then wake you up."
+    ]
+  };
+  
+  // Heart burst animation function
+  function burstHearts(count = 30) {
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = (Math.random() * 100) + 'vw';
+      h.style.bottom = '-20px';
+      h.style.background = ['#ff7aa2', '#ffd1dc', '#ff9eb5', '#ffc3a0'][i % 4];
+      h.style.animationDuration = (1.8 + Math.random() * 1.4) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 3000);
+    }
+  }
+  
+  // Spin wheel function - unlimited spinning allowed
+  $('#spin-button').on('click', function() {
+    
+    const categories = Object.keys(messages);
+    const slice = 360 / categories.length;
+    const categoryIndex = Math.floor(Math.random() * categories.length);
 
+    // Lots of spins + rotate so the chosen slice's CENTER aligns with the top pin.
+    const centerAngle = (categoryIndex * slice) + (slice / 2);   // relative to from -90deg start
+    const baseSpins   = 10 * 360;                                // 10 full turns
+    const degrees     = baseSpins + (360 - centerAngle);         // align center to 0deg (top)
+
+    // Rotate wheel
+    $('#love-wheel').css({ 'transform': `rotate(${degrees}deg)` });
+    
+    // Show result after wheel stops
+    setTimeout(function() {
+      const category = categories[categoryIndex];
+      const message = messages[category][Math.floor(Math.random() * messages[category].length)];
+      
+      // Display in modal
+      $('#result-title').text(
+        category === 'lovethings' ? "Things I Love About You" :
+        category === 'trips' ? "Favorite Trip Memory" :
+        category === 'future' ? "Our Future Together" :
+        category === 'jokes' ? "Our Inside Jokes" :
+        category === 'moments' ? "Special Moments" : "Your Cute Quirks"
+      );
+      $('#result-message').text(message);
+      $('#wheel-result-modal').fadeIn(300);
+      burstHearts(20); // Add hearts when showing result
+      
+      // No restriction - can spin again immediately!
+    }, 4200);
+  });
+  
+  // Close modal
+  $('.close-modal').on('click', function() {
+    $('#wheel-result-modal').fadeOut(300);
+  });
+  
+  // Close modal when clicking outside
+  $(window).on('click', function(e) {
+    if ($(e.target).is('#wheel-result-modal')) {
+      $('#wheel-result-modal').fadeOut(300);
+    }
+  });
+});
+
+})(jQuery);
