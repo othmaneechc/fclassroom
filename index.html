@@ -17,12 +17,36 @@
 	<body class="is-preload">
 
 		<!-- Access Code Overlay -->
-		<div id="access-overlay">
-			<div id="access-form">
-				<h2>Enter NetID</h2>
-				<input type="password" id="access-code" placeholder="Access Code" />
-				<button id="access-button" class="button primary color">Enter</button>
-				<p id="access-error"></p>
+		<div id="access-overlay" role="dialog" aria-modal="true" aria-hidden="false">
+			<div id="access-celebration">
+				<div class="celebration-card">
+					<h2 class="major">Happy 24 Months, my love!</h2>
+					<br>
+					<p class="celebration-subtitle">Two whole years of us—thank you for saying yes again and again. I hope you enjoyed this two-year trial period 😁</p>
+					<button id="renew-button" class="button primary color">Renew our contract for 5 more years</button>
+					<p id="renew-message" class="celebration-message" role="status"></p>
+					<button id="enter-site-button" class="button color2">Enter</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="gift-game-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+			<div class="gift-game-frame">
+				<div id="gift-guess-card" class="guess-card">
+					<h2 class="major">Suitcase Secrets</h2>
+					<p>Eight little treasures are tucked into my bag for you. Read the clue, make your guess, then peek if you must.</p>
+					<p id="gift-clue" class="gift-clue">Loading clue...</p>
+					<input type="text" id="gift-guess-input" placeholder="Type your guess here" autocomplete="off" />
+					<div class="guess-actions">
+						<button id="gift-guess-button" class="button primary color1">Lock it in</button>
+						<button id="gift-reveal-button" class="button">Reveal secret</button>
+					</div>
+					<p id="gift-feedback"></p>
+					<p id="gift-progress"></p>
+					<div id="gift-tracker"></div>
+					<p id="gift-score"></p>
+					<button id="gift-finish-button" class="button primary color" type="button">Enter the classroom</button>
+				</div>
 			</div>
 		</div>
 
@@ -169,72 +193,27 @@
 							</section> -->
 
 							<!-- Hangman panel ------------------------------------------------------->
-							<section id="hangman" class="panel spotlight small right">
+							<!-- <section id="hangman" class="panel spotlight small right">
 							<div class="content span-10">
-								<h2 class="major">Hangman Challenge</h2>
+								<h2 class="major">Hangman Challenge</h2> -->
 
 								<!-- word display -->
-								<p id="hangman-word"></p>
+								<!-- <p id="hangman-word"></p> -->
 
 								<!-- guess input -->
-								<input id="hangman-input" type="text" maxlength="1"
+								<!-- <input id="hangman-input" type="text" maxlength="1"
 									placeholder="Type a letter" style="text-transform:uppercase" />
-								<button id="hangman-btn" class="button primary color">Guess</button>
+								<button id="hangman-btn" class="button primary color">Guess</button> -->
 
 								<!-- feedback -->
-								<p id="hangman-misses"></p>
+								<!-- <p id="hangman-misses"></p>
 								<p id="hangman-message"></p>
-							</div>
+							</div> -->
 
-							<div class="image filtered tinted" data-position="top left">
+							<!-- <div class="image filtered tinted" data-position="top left">
 								<img src="images/pic02.jpg" alt="" />
 							</div>
-							</section>
-							
-							<!-- Love Wheel Section -->
-							<section class="panel spotlight x-small right" id="love-wheel-section">
-								<div class="content span-3">
-									<h2 class="major">Spin the Love Wheel</h2>
-									<p>Give it a spin and see what comes up!</p>
-									
-									<div class="wheel-container">
-										<div class="wheel" id="love-wheel">
-											<div class="wheel-section" data-category="lovethings"></div>
-											<div class="wheel-section" data-category="trips"></div>
-											<div class="wheel-section" data-category="future"></div>
-											<div class="wheel-section" data-category="jokes"></div>
-											<div class="wheel-section" data-category="moments"></div>
-											<div class="wheel-section" data-category="quirks"></div>
-											<div class="wheel-text">
-												<div>Things I Love</div>
-												<div>Trip Memory</div>
-												<div>Future Plans</div>
-												<div>Inside Jokes</div>
-												<div>Special Moments</div>
-												<div>Cute Quirks</div>
-											</div>
-										</div>
-										<div class="wheel-pin"></div>
-									</div>
-									
-									<button id="spin-button" class="button primary">Spin the Wheel</button>
-								</div>
-								<div class="image filtered tinted" data-position="top left">
-									<img src="images/pic05.jpg" alt="" />
-								</div>
-							</section>
-
-							<!-- Wheel Result Modal -->
-							<div id="wheel-result-modal">
-								<div class="modal-content">
-									<span class="close-modal">&times;</span>
-									<h3 id="result-title">Category</h3>
-									<p id="result-message">Message will appear here</p>
-								</div>
-							</div>
-
-							<div class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
-
+							</section> -->
 					</div>
 
 			</div>

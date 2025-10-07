@@ -3738,37 +3738,271 @@ input, select, textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#access-form {
-    background: rgba(255, 255, 255, 0.1);
+    flex-direction: column;
+    gap: 2rem;
     padding: 2rem;
-    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+#access-celebration {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.celebration-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    padding: 3rem 2.5rem;
+    border-radius: 0.75rem;
+    max-width: 32rem;
     text-align: center;
-}
-
-#access-form input {
-    display: block;
-    padding: 1rem;
-    margin: 2rem auto;
-    width: 80%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 0.25rem;
-    background: transparent;
     color: #fff;
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
+    position: relative;
+    z-index: 1;
 }
 
-#access-form button {
-    padding: 0.1rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
+.celebration-card h2.major {
+    margin-bottom: 1rem;
+    text-transform: none;
+    letter-spacing: 0.05em;
 }
 
-#access-form p {
-    color: #ffcccc;
-    font-size: 0.9rem;
+.celebration-subtitle {
+    color: #ffe4b4;
+    margin-bottom: 1.75rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+#renew-button {
+    margin-bottom: 1.25rem;
+}
+
+.celebration-message {
+    min-height: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+    color: #ffd1dc;
+}
+
+#enter-site-button {
     margin-top: 0.5rem;
+}
+
+#confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 12050;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -15%;
+    width: 0.6rem;
+    height: 1.4rem;
+    opacity: 0;
+    border-radius: 0.2rem;
+    animation: confetti-fall var(--confetti-duration, 4s) linear forwards;
+}
+
+.confetti-piece:nth-child(3n) {
+    border-radius: 50%;
+}
+
+.confetti-piece:nth-child(4n) {
+    transform: rotate(45deg);
+}
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -120vh, 0) rotate(0deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--confetti-drift, 0px), 120vh, 0) rotate(var(--confetti-rotation, 720deg));
+    }
+}
+
+body.locked {
+    overflow: hidden;
+}
+
+#gift-game-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at top left, rgba(255, 221, 236, 0.3), rgba(33, 30, 44, 0.9));
+    z-index: 12010;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#gift-game-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#gift-game-overlay .gift-game-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 36rem;
+    width: 100%;
+    margin-inline: auto;
+}
+
+#gift-game-overlay .guess-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(6px);
+    padding: 2.5rem 2rem;
+    border-radius: 0.75rem;
+    max-width: 32rem;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.25);
+}
+
+#gift-game-overlay .guess-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 193, 218, 0.45), rgba(171, 220, 255, 0.35));
+    opacity: 0.45;
+    z-index: -1;
+}
+
+#gift-game-overlay .guess-card p {
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+#gift-game-overlay .guess-card h2.major {
+    margin-bottom: 0.75rem;
+    text-transform: none;
+    letter-spacing: 0.08em;
+}
+
+#gift-game-overlay .gift-clue {
+    font-style: italic;
+    color: #ffe4b4;
+    margin-bottom: 1.25rem;
+}
+
+#gift-game-overlay input[type="text"] {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+#gift-game-overlay input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+#gift-game-overlay input[type="text"]:disabled {
+    opacity: 0.7;
+}
+
+#gift-game-overlay .guess-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0 1rem;
+}
+
+#gift-game-overlay .guess-actions .button {
+    min-width: 9rem;
+}
+
+#gift-feedback {
+    min-height: 2.25rem;
+    font-size: 1rem;
+    color: #ffd6a5;
+}
+
+#gift-progress {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+#gift-tracker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.tracker-dot {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    transition: transform 0.3s ease, background 0.3s ease, border 0.3s ease;
+}
+
+.tracker-dot.current {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.65);
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+.tracker-dot.guessed {
+    background: #b9fbc0;
+    border-color: #b9fbc0;
+}
+
+.tracker-dot.revealed {
+    background: #ffd6a5;
+    border-color: #ffd6a5;
+}
+
+#gift-score {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #ffe4b4;
+    font-weight: 600;
+}
+
+#gift-game-overlay .guess-card.finished {
+    padding: 3rem 2rem;
+}
+
+#gift-finish-button {
+    display: none;
+    margin-top: 1.5rem;
+}
+
+#gift-finish-button.visible {
+    display: inline-block;
 }
 
 .quiz-item {

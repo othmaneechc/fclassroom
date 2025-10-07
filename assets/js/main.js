@@ -851,28 +851,143 @@
 		var countdownInterval = setInterval(updateCountdown, 1000);
 		updateCountdown();
 
-		var validCode = "aj389"; 
+		var celebrationShown = false;
 
-		$("#access-button").on("click", function() {
-			var code = $("#access-code").val();
-			if (code === validCode) {
-				$("#access-overlay").fadeOut(500);
-			} else {
-				$("#access-error").text("Incorrect. You suck.");
+		function resolveConfettiHost() {
+			var $access = $("#access-overlay");
+			if ($access.length && $access.attr("aria-hidden") !== "true") {
+				return $access;
 			}
-		});
 
-		// When the correct code is entered, fade out the overlay and re-enable scrolling.
-		$("#access-button").on("click", function() {
-			var code = $("#access-code").val();
-			if (code === validCode) {
-				$("#access-overlay").fadeOut(500, function() {
-					$("body").css("overflow", "auto");
+			var $game = $("#gift-game-overlay");
+			if ($game.length && $game.attr("aria-hidden") !== "true") {
+				return $game;
+			}
+
+			return $("body");
+		}
+
+		function launchConfetti() {
+			var $host = resolveConfettiHost();
+
+			var $container = $("#confetti-container");
+			if (!$container.length) {
+				$container = $('<div id="confetti-container"></div>');
+				$host.append($container);
+			} else if (!$container.parent().is($host)) {
+				$container.appendTo($host);
+			}
+
+			var colors = ['#ff8ba7', '#ffc6ff', '#caffbf', '#ffd6a5', '#b9fbc0', '#b2e7ff'];
+			var pieces = 150;
+
+			for (var i = 0; i < pieces; i++) {
+				var delay = Math.random() * 2.5;
+				var fall = 3.2 + Math.random() * 2.8;
+				var drift = (Math.random() - 0.5) * 60;
+				var rotation = 360 + Math.random() * 720;
+				var width = 8 + Math.random() * 6;
+				var height = 18 + Math.random() * 8;
+
+				var $piece = $('<span class="confetti-piece"></span>').css({
+					left: (Math.random() * 100) + 'vw',
+					backgroundColor: colors[i % colors.length],
+					animationDelay: delay + 's',
+					animationDuration: fall + 's',
+					width: width + 'px',
+					height: height + 'px',
+					'--confetti-drift': drift + 'vw',
+					'--confetti-rotation': rotation + 'deg'
 				});
-			} else {
-				$("#access-error").text("Incorrect. You suck.");
+
+				$container.append($piece);
+				(function(piece, lifespan) {
+					setTimeout(function() {
+						piece.remove();
+					}, lifespan);
+				})($piece, (delay + fall) * 1000 + 500);
+			}
+
+			// Light housekeeping so the container stays lean.
+			setTimeout(function() {
+				$container.children(':gt(300)').remove();
+			}, 10000);
+		}
+
+		function showCelebration() {
+			if (celebrationShown) return;
+			celebrationShown = true;
+
+			$("body").addClass("locked");
+			$("#access-overlay").attr("aria-hidden", "false").show();
+
+			$("#access-celebration")
+				.stop(true, true)
+				.css("opacity", 0)
+				.animate({ opacity: 1 }, 400, function() {
+					$("#renew-button").trigger("focus");
+				});
+
+			launchConfetti();
+		}
+
+		function showGiftGame() {
+			var $overlay = $("#gift-game-overlay");
+			$overlay.attr("aria-hidden", "false").addClass("visible");
+			setTimeout(function() {
+				$("#gift-guess-input").trigger("focus");
+			}, 450);
+		}
+
+		function unlockSite() {
+			var $overlay = $("#gift-game-overlay");
+			$overlay.attr("aria-hidden", "true").removeClass("visible");
+			setTimeout(function() {
+				$("body").removeClass("locked");
+			}, 400);
+		}
+
+		function closeOverlay() {
+			var $overlay = $("#access-overlay");
+			$overlay.attr("aria-hidden", "true").fadeOut(400, function() {
+				$overlay.hide();
+				showGiftGame();
+			});
+		}
+
+		$("#access-celebration").attr("aria-hidden", "false");
+
+		$("#renew-button").on("click", function() {
+			var $button = $(this);
+			if ($button.prop("disabled")) return;
+
+			var renewalDate = new Date();
+			renewalDate.setFullYear(renewalDate.getFullYear() + 5);
+
+			var renewalText = renewalDate.toLocaleDateString(undefined, {
+				month: 'long',
+				day: 'numeric',
+				year: 'numeric'
+			});
+
+			$("#renew-message").text("Contract renewed until " + renewalText + ". There is no exit clause anymore, we locked in!");
+			$button.prop("disabled", true).text("Renewed!");
+
+			launchConfetti();
+		});
+
+		$("#enter-site-button").on("click", closeOverlay);
+
+		// If someone double-clicks the overlay background because of excitement, do nothing.
+		$("#access-overlay").on("click", function(event) {
+			if (event.target === this && celebrationShown) {
+				// Keep the celebration visible until they press the button.
+				event.stopPropagation();
 			}
 		});
+
+		// Trigger celebration once everything is ready.
+		showCelebration();
 
 		if (browser.mobile) {
 			// Disable all scroll-assist features.
@@ -965,7 +1080,7 @@ var settings = {
         threshold: 10
     },
     excludeSelector: 'input:focus, select:focus, textarea:focus, audio, video, iframe',
-    linkScrollSpeed: 10000  // changed from 1000 to 3000 (3 seconds)
+    linkScrollSpeed: 2500  // quicker slide between panels
 };
 
 $(function() {
@@ -1088,6 +1203,242 @@ $(function() {
       $('#wheel-result-modal').fadeOut(300);
     }
   });
+});
+
+// Gift Guessing Game
+$(function() {
+  const $card = $('#gift-guess-card');
+  if (!$card.length) return;
+
+  const gifts = [
+    {
+      name: "Horns of Gazels",
+      aliases: ["horns of gazelle", "horns of gazels", "gazelle horns", "gazelle horn"],
+      clue: "Sweet crescent moons dusted in sugar, straight from a Casablanca bakery window.",
+      success: "🥐 Yes! Horns of Gazels.",
+      reveal: "It was Horns of Gazels",
+      nudge: "Think flaky, almond, and the kind of pastry that melts with tea."
+    },
+    {
+      name: "Pink Buldak",
+      aliases: ["buldak", "pink ramen", "pink buldak ramen"],
+      clue: "A rosy, spicy comfort bowl.",
+      success: "🍜 Correct — Pink Buldak",
+      reveal: "Pink Buldak ramen.",
+      nudge: "Picture our favorite ramen packet."
+    },
+    {
+      name: "The Ordinary Retinol 1%",
+      aliases: ["ordinary retinol", "retinol", "retinol 1", "the ordinary retinol"],
+      clue: "That little glass bottle promising glowier tomorrows.",
+      success: "✨ Nailed it — The Ordinary Retinol 1%",
+      reveal: "The Ordinary Retinol 1%",
+      nudge: "Skincare shelf. Amber bottle. Nighttime ritual."
+    },
+    {
+      name: "Takis",
+      aliases: ["taki", "takis"],
+      clue: "Favorite American Chips",
+      success: "Yup! Takis",
+      reveal: "Takis!",
+      nudge: "Come on, you know this one."
+    },
+    {
+      name: "Moroccan Green Tea",
+      aliases: ["green tea", "moroccan tea", "mint tea", "atay"],
+      clue: "A copper teapot’s best friend, brewed with fresh mint and long pours.",
+      success: "🍃 Exactly — Moroccan green tea.",
+      reveal: "Moroccan green tea leaves.",
+      nudge: "Smell the mint and sugar."
+    },
+    {
+      name: "Cookies",
+      aliases: ["cookie", "biscuits"],
+      clue: "Bite-sized sugar rushes.",
+      success: "🍪 Yes ma’am — Subway cookies to snack on.",
+      reveal: "A stash of Subway cookies.",
+      nudge: "Sweet circles ready to crumble between your fingers."
+    },
+    {
+      name: "Myself",
+      aliases: ["me", "yours truly", "your boy"],
+      clue: "The carry-on item that misses you most.",
+      success: "🤍 It’s me — the most excited passenger on that flight.",
+      reveal: "I’m bringing myself, arms wide open.",
+      nudge: "This surprise has a heartbeat."
+    },
+  ];
+
+  const total = gifts.length;
+  const progressState = new Array(total).fill("pending");
+  let index = 0;
+  let correctCount = 0;
+
+  const $clue = $('#gift-clue');
+  const $input = $('#gift-guess-input');
+  const $guessBtn = $('#gift-guess-button');
+  const $revealBtn = $('#gift-reveal-button');
+  const $feedback = $('#gift-feedback');
+  const $progress = $('#gift-progress');
+  const $tracker = $('#gift-tracker');
+  const $score = $('#gift-score');
+  const $finishBtn = $('#gift-finish-button');
+
+  function normalize(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+  function matchesAlias(gift, guess) {
+    if (!guess) return false;
+    const pool = [gift.name].concat(gift.aliases || []);
+    return pool.some(function(entry) {
+      const alias = normalize(entry);
+      if (!alias) return false;
+      if (alias === guess) return true;
+      if (alias.length > 4 && guess.indexOf(alias) >= 0) return true;
+      if (guess.length > 4 && alias.indexOf(guess) >= 0) return true;
+      return false;
+    });
+  }
+
+  function setMode(mode) {
+    $guessBtn.data('mode', mode);
+    if (mode === 'guess') {
+      $guessBtn.text('Lock it in');
+    } else {
+      $guessBtn.text(index + 1 >= total ? 'See the finale' : 'Next surprise');
+    }
+  }
+
+  function updateTracker() {
+    const dots = [];
+    for (let i = 0; i < total; i++) {
+      const classes = ['tracker-dot'];
+      if (progressState[i] === 'guessed') classes.push('guessed');
+      if (progressState[i] === 'revealed') classes.push('revealed');
+      if (i === index && index < total) classes.push('current');
+      dots.push('<span class="' + classes.join(' ') + '"></span>');
+    }
+    $tracker.html(dots.join(''));
+  }
+
+  function updateScore() {
+    $score.text('Correct guesses: ' + correctCount + ' / ' + total);
+  }
+
+  function renderRound() {
+    const gift = gifts[index];
+    $clue.text(gift.clue);
+    $input.val('').prop('disabled', false);
+    $input.show();
+    $guessBtn.show().prop('disabled', false);
+    $revealBtn.show().prop('disabled', false);
+    $feedback.text('');
+    $revealBtn.prop('disabled', false).text('Reveal secret');
+    setMode('guess');
+    $progress.text('Surprise ' + (index + 1) + ' of ' + total);
+    updateTracker();
+    updateScore();
+    $finishBtn.removeClass('visible');
+    setTimeout(function() {
+      $input.trigger('focus');
+    }, 120);
+  }
+
+  function finishGame() {
+    $card.addClass('finished');
+    $clue.text('Suitcase inspection complete.');
+    $input.prop('disabled', true).hide();
+    $guessBtn.hide();
+    $revealBtn.hide();
+    $feedback.text('Every surprise is tagged, packed, and waiting for you.');
+    $progress.text('All surprises revealed.');
+    updateTracker();
+    updateScore();
+    launchConfetti();
+    $finishBtn.addClass('visible').trigger('focus');
+  }
+
+  function goNext() {
+    index += 1;
+    if (index >= total) {
+      finishGame();
+      return;
+    }
+    renderRound();
+  }
+
+  function handleWin(gift) {
+    progressState[index] = 'guessed';
+    correctCount += 1;
+    $feedback.text(gift.success);
+    $input.prop('disabled', true);
+    $revealBtn.prop('disabled', true);
+    setMode('next');
+    updateTracker();
+    updateScore();
+    launchConfetti();
+  }
+
+  function handleReveal(gift) {
+    if (progressState[index] !== 'guessed') {
+      progressState[index] = 'revealed';
+    }
+    $feedback.text(gift.reveal);
+    $input.prop('disabled', true);
+    $revealBtn.prop('disabled', true);
+    setMode('next');
+    updateTracker();
+    updateScore();
+  }
+
+  $guessBtn.on('click', function() {
+    if ($guessBtn.data('mode') === 'next') {
+      goNext();
+      return;
+    }
+
+    const guess = normalize($input.val());
+    const gift = gifts[index];
+
+    if (!guess) {
+      $feedback.text('Whisper a guess first, sweet face.');
+      $input.trigger('focus');
+      return;
+    }
+
+    if (matchesAlias(gift, guess)) {
+      handleWin(gift);
+    } else {
+      $feedback.text(gift.nudge);
+    }
+  });
+
+  $input.on('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      $guessBtn.trigger('click');
+    }
+  });
+
+  $revealBtn.on('click', function() {
+    if ($guessBtn.data('mode') === 'next') {
+      goNext();
+      return;
+    }
+
+    const gift = gifts[index];
+    handleReveal(gift);
+  });
+
+  $finishBtn.on('click', function() {
+    unlockSite();
+  });
+
+  renderRound();
 });
 
 })(jQuery);
